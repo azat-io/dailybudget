@@ -1,28 +1,21 @@
-import { MongoClient } from 'mongodb'
-import isNil from 'lodash/isNil'
+import mongoose from 'mongoose'
+import chalk from 'chalk'
 
 class DataBase {
-  constructor () {
-    this.state = {
-      database: null,
-    }
-  }
-
-  connect (url, done) {
-    if (!isNil(this.state.database)) {
-      return done()
-    }
-    MongoClient.connect(url, { useNewUrlParser: true, autoIndexId: false }, (error, client) => {
-      if (error) {
-        return done(error)
-      }
-      this.state.database = client.db(process.env.DB_NAME)
-      done()
+  /**
+   * Connect to MongoDB
+   */
+  connect () {
+    const mongoUrl = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
+    mongoose.connect(mongoUrl, {
+      useNewUrlParser: true,
+    }).then(() => {
+      console.log(chalk.bold('MongoDB is up on: ' +
+        chalk.green(mongoUrl)))
+    }).catch((error) => {
+      console.log(chalk.bold('MongoDB error: ' +
+        chalk.red(error)))
     })
-  }
-
-  get () {
-    return this.state.database
   }
 }
 

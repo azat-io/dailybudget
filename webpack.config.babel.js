@@ -1,6 +1,9 @@
 import dotenv from 'dotenv'
 import path from 'path'
-import { HotModuleReplacementPlugin } from 'webpack'
+import {
+  DefinePlugin,
+  HotModuleReplacementPlugin,
+} from 'webpack'
 
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin'
 import HardSourceWebpackPlugin from 'hard-source-webpack-plugin'
@@ -59,12 +62,15 @@ export default {
         windows: false,
       },
     }),
+    new DefinePlugin({
+      API_PREFIX: JSON.stringify(process.env.API_PREFIX),
+    }),
     new HotModuleReplacementPlugin(),
     new HardSourceWebpackPlugin(),
   ],
   module: {
     rules: [{
-      test: /\.js$/,
+      test: /\.js$/i,
       exclude: [
         '/node_modules/',
         '/public/',
@@ -76,6 +82,10 @@ export default {
         },
       }],
       include: path.resolve('client'),
+    }, {
+      test: /\.(graphql|gql)$/i,
+      exclude: /node_modules/,
+      loader: 'graphql-tag/loader',
     }, {
       test: /\.(gif|png|jpe?g)$/i,
       use: [
@@ -104,7 +114,7 @@ export default {
         },
       ],
     }, {
-      test: /\.svg$/,
+      test: /\.svg$/i,
       use: [{
         loader: 'raw-loader',
       }, {

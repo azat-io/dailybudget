@@ -1,0 +1,18 @@
+type Category {
+  id: String!
+  name: String!
+  icon: String!
+}
+
+type Query {
+  categories: [Category]
+  category(id: String): Category
+}
+
+type Mutation {
+  addCategory(name: String!, icon: String!): Category
+}
+
+schema {
+  query: Query
+}

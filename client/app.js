@@ -4,6 +4,10 @@ import {
   Route,
   Switch,
 } from 'react-router-dom'
+import { ApolloClient } from 'apollo-client'
+import { ApolloProvider } from 'react-apollo'
+import { HttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { render } from 'react-dom'
@@ -20,6 +24,16 @@ import Footer from 'components/Footer'
 import rootReducer from 'reducers'
 
 import theme from 'etc/theme'
+
+const client = new ApolloClient({
+  link: new HttpLink({
+    uri: `${API_PREFIX}/api`,
+  }),
+  cache: new InMemoryCache(),
+})
+
+const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ &&
+  window.__REDUX_DEVTOOLS_EXTENSION__())
 
 injectGlobal`
   ${normalize()}
@@ -55,27 +69,26 @@ const Container = styled.div`
   min-height: 100%;
 `
 
-const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ &&
-  window.__REDUX_DEVTOOLS_EXTENSION__())
-
 const App = () => (
-  <Provider store={store}>
-    <Router>
-      <ThemeProvider theme={theme}>
-        <Container>
-          <Header />
-          <Main>
-            <Switch>
-              <Route exact path={'/'} component={Home} />
-              <Route path={'/categories'} component={Categories} />
-              <Route component={NotFound} />
-            </Switch>
-          </Main>
-          <Footer />
-        </Container>
-      </ThemeProvider>
-    </Router>
-  </Provider>
+  <ApolloProvider client={client}>
+    <Provider store={store}>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <Container>
+            <Header />
+            <Main>
+              <Switch>
+                <Route exact path={'/'} component={Home} />
+                <Route path={'/categories'} component={Categories} />
+                <Route component={NotFound} />
+              </Switch>
+            </Main>
+            <Footer />
+          </Container>
+        </ThemeProvider>
+      </Router>
+    </Provider>
+  </ApolloProvider>
 )
 
 render(<App />, document.getElementById('app'))

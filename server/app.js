@@ -1,36 +1,37 @@
 import express from 'express'
+import path from 'path'
 import chalk from 'chalk'
-import bodyParser from 'body-parser'
+import cors from 'cors'
 import dotenv from 'dotenv'
 
+import { ApolloServer } from 'apollo-server-express'
+import { importSchema } from 'graphql-import'
+
 import database from './database'
+import resolvers from './resolvers'
 
-import categories from './controllers/categories'
-
-const app = express()
-const logError = error => chalk.bold.red('Error: ') + error
+import {
+  Category,
+} from './models'
 
 dotenv.config()
+database.connect()
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-  extended: true,
-}))
+const app = express()
 
-app.use(express.static('public'))
+app.use(cors())
 
-app.get('/api/categories', categories.all)
-app.get('/api/categories/:id', categories.findById)
-app.post('/api/categories', categories.create)
-app.put('/api/categories/:id', categories.update)
-app.delete('/api/categories/:id', categories.delete)
+const server = new ApolloServer({
+  typeDefs: importSchema(path.join(__dirname, './type-defs.graphql')),
+  resolvers,
+  context: () => ({
+    Category,
+  }),
+})
 
-database.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, error => {
-  if (error) {
-    return logError(error)
-  }
-  app.listen(process.env.SERVER_PORT, () => {
-    console.log(chalk.bold('Server is up and running on port: ' +
-      chalk.yellow(process.env.SERVER_PORT)))
-  })
+server.applyMiddleware({ app, path: '/api' })
+
+app.listen(process.env.SERVER_PORT, () => {
+  console.log(chalk.bold('Server is up and running on: ' +
+    chalk.yellow(`http://localhost:${process.env.SERVER_PORT}`)))
 })
