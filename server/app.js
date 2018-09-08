@@ -19,7 +19,10 @@ database.connect()
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+  origin: `http://localhost:${process.env.CLIENT_PORT}`,
+  credentials: true,
+}))
 
 const server = new ApolloServer({
   typeDefs: importSchema(path.join(__dirname, './type-defs.graphql')),
