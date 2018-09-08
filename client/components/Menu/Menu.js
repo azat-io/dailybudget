@@ -10,15 +10,10 @@ import map from 'lodash/map'
 import homeIcon from './home-icon.svg'
 import settingsIcon from './settings-icon.svg'
 
-import {
-  border,
-  primaryBackground,
-} from 'etc/theme'
-
 const StyledMenu = styled.menu`
   font-size: 15px;
   height: 100%;
-  border-right: ${border};
+  border-right: ${({ theme }) => theme.border};
   padding: 12px 24px;
   margin: 0;
 `
@@ -27,7 +22,7 @@ const StyledMenuItem = styled.p`
   cursor: pointer;
 
   &:hover {
-    color: ${primaryBackground};
+    color: ${({ theme }) => theme.primaryBackground};
     transition: all 0.3s;
   }
 `

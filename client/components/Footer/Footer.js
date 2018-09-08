@@ -1,17 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import {
-  border,
-  primaryBackground,
-  primaryColor,
-} from 'etc/theme'
-
 const StyledFooter = styled.footer`
-  background: ${primaryBackground};
+  background: ${({ theme }) => theme.primaryBackground};
   font-size: 13px;
-  color: ${primaryColor};
-  border-top: ${border};
+  color: ${({ theme }) => theme.primaryColor};
+  border-top: ${({ theme }) => theme.border};
   padding: 12px 24px;
   text-align: center;
 `

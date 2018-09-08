@@ -7,7 +7,7 @@ import {
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { render } from 'react-dom'
-import styled, { injectGlobal } from 'styled-components'
+import styled, { ThemeProvider, injectGlobal } from 'styled-components'
 import { normalize, selection } from 'polished'
 import Home from 'containers/Home'
 import Categories from 'containers/Categories'
@@ -19,18 +19,14 @@ import Footer from 'components/Footer'
 
 import rootReducer from 'reducers'
 
-import {
-  primaryBackground,
-  primaryColor,
-  textColor,
-} from 'etc/theme'
+import theme from 'etc/theme'
 
 injectGlobal`
   ${normalize()}
 
   ${selection({
-    background: primaryBackground,
-    color: primaryColor,
+    background: theme.primaryBackground,
+    color: theme.primaryColor,
   })}
 
   html,
@@ -39,7 +35,7 @@ injectGlobal`
     font-size: 17px;
     width: 100%;
     height: 100%;
-    color: ${textColor};
+    color: ${theme.textColor};
   }
 
   a {
@@ -65,17 +61,19 @@ const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ &&
 const App = () => (
   <Provider store={store}>
     <Router>
-      <Container>
-        <Header />
-        <Main>
-          <Switch>
-            <Route exact path={'/'} component={Home} />
-            <Route path={'/categories'} component={Categories} />
-            <Route component={NotFound} />
-          </Switch>
-        </Main>
-        <Footer />
-      </Container>
+      <ThemeProvider theme={theme}>
+        <Container>
+          <Header />
+          <Main>
+            <Switch>
+              <Route exact path={'/'} component={Home} />
+              <Route path={'/categories'} component={Categories} />
+              <Route component={NotFound} />
+            </Switch>
+          </Main>
+          <Footer />
+        </Container>
+      </ThemeProvider>
     </Router>
   </Provider>
 )

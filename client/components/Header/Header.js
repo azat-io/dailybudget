@@ -4,22 +4,16 @@ import styled from 'styled-components'
 
 import SVGInline from 'react-svg-inline'
 
-import {
-  border,
-  primaryBackground,
-  primaryColor,
-} from 'etc/theme'
-
 import logo from './logo.png'
 import menuIcon from './menu-icon.svg'
 
 const StyledHeader = styled.header`
   display: grid;
   grid-template-columns: 1fr 122px 1fr;
-  background: ${primaryBackground};
-  color: ${primaryColor};
+  background: ${({ theme }) => theme.primaryBackground};
+  color: ${({ theme }) => theme.primaryColor};
   height: 24px;
-  border-bottom: ${border};
+  border-bottom: ${({ theme }) => theme.border};
   padding: 12px 24px;
 `
 
@@ -32,7 +26,7 @@ const Header = () => (
   <StyledHeader>
     <SVGInline
       svg={menuIcon}
-      fill={primaryColor}
+      fill={'currentColor'}
       width={'20px'}
       height={'20px'}
       style={{

@@ -44,7 +44,7 @@ export default {
       prefix: 'assets/',
       persistentCache: true,
       inject: true,
-      background: '#fbd75d',
+      background: 'lightgreen',
       title: 'Daily Budget',
       icons: {
         android: true,
