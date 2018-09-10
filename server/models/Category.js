@@ -4,9 +4,10 @@ import uuid from 'uuid/v4'
 const Schema = mongoose.Schema
 
 const Category = new Schema({
-  _id: {
+  id: {
     type: String,
     default: uuid(),
+    unique: true,
   },
   name: {
     type: String,

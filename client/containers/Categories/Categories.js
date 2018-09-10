@@ -6,7 +6,7 @@ import map from 'lodash/map'
 
 import Title from 'components/Title'
 
-import categories from './categories.gql'
+import GET_CATEGORIES from './categories.gql'
 
 const Categories = ({ data: { categories } }) => (
   <div>
@@ -27,4 +27,4 @@ Categories.propTypes = {
   data: PropTypes.object.isRequired,
 }
 
-export default graphql(categories)(Categories)
+export default graphql(GET_CATEGORIES)(Categories)

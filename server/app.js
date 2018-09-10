@@ -12,6 +12,7 @@ import resolvers from './resolvers'
 
 import {
   Category,
+  User,
 } from './models'
 
 dotenv.config()
@@ -29,6 +30,7 @@ const server = new ApolloServer({
   resolvers,
   context: () => ({
     Category,
+    User,
   }),
 })
 

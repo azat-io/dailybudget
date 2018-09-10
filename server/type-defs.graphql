@@ -4,12 +4,25 @@ type Category {
   icon: String!
 }
 
+type User {
+  id: String!
+  email: String!
+  password: String!
+  created: String!
+}
+
+type Token {
+  token: String!
+}
+
 type Query {
   categories: [Category]
   category(id: String): Category
+  users: [User]
 }
 
 type Mutation {
+  signUp(email: String!, password: String!): Token
   addCategory(name: String!, icon: String!): Category
 }
 

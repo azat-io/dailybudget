@@ -13,8 +13,10 @@ import { createStore } from 'redux'
 import { render } from 'react-dom'
 import styled, { ThemeProvider, injectGlobal } from 'styled-components'
 import { normalize, selection } from 'polished'
+
 import Home from 'containers/Home'
 import Categories from 'containers/Categories'
+import SignUp from 'containers/SignUp'
 import NotFound from 'containers/NotFound'
 
 import Header from 'components/Header'
@@ -80,6 +82,7 @@ const App = () => (
               <Switch>
                 <Route exact path={'/'} component={Home} />
                 <Route path={'/categories'} component={Categories} />
+                <Route path={'/sign-up'} component={SignUp} />
                 <Route component={NotFound} />
               </Switch>
             </Main>
