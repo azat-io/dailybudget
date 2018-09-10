@@ -22,7 +22,7 @@ const StyledMenuItem = styled.p`
   cursor: pointer;
 
   &:hover {
-    color: ${({ theme }) => theme.primaryBackground};
+    color: ${({ theme }) => theme.primaryColor};
     transition: all 0.3s;
   }
 `

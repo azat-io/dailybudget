@@ -39,8 +39,8 @@ injectGlobal`
   ${normalize()}
 
   ${selection({
-    background: theme.primaryBackground,
-    color: theme.primaryColor,
+    background: theme.primaryColor,
+    color: theme.primaryContrastColor,
   })}
 
   html,

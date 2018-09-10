@@ -11,7 +11,7 @@ const StyledHeader = styled.header`
   display: grid;
   grid-template-columns: 1fr 122px 1fr;
   background: ${({ theme }) => theme.primaryBackground};
-  color: ${({ theme }) => theme.primaryColor};
+  color: ${({ theme }) => theme.primaryContrastColor};
   height: 24px;
   border-bottom: ${({ theme }) => theme.border};
   padding: 12px 24px;
