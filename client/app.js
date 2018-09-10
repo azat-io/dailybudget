@@ -6,7 +6,8 @@ import {
 } from 'react-router-dom'
 import { ApolloClient } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
-import { HttpLink } from 'apollo-link-http'
+import { createHttpLink } from 'apollo-link-http'
+import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
@@ -27,11 +28,27 @@ import rootReducer from 'reducers'
 
 import theme from 'etc/theme'
 
+const httpLink = createHttpLink({
+  uri: `${API_PREFIX}/api`,
+})
+
+const authLink = setContext((request, { headers }) => {
+  const token = localStorage.getItem('TOKEN')
+  console.log('token', token)
+  return {
+    headers: {
+      ...headers,
+      authorization: token,
+    },
+  }
+})
+
 const client = new ApolloClient({
-  link: new HttpLink({
-    uri: `${API_PREFIX}/api`,
-  }),
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
+  fetchOptions: {
+    credentials: 'include',
+  },
 })
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ &&

@@ -82,7 +82,7 @@ export default compose(
     password: get(signUpForm, 'values.password'),
   })),
   withHandlers({
-    handleSubmit: ({ email, password }) => async (event, signUp) => {
+    handleSubmit: ({ email, password, reset }) => async (event, signUp) => {
       event.preventDefault()
       try {
         const signUpUser = await signUp({
@@ -92,9 +92,8 @@ export default compose(
           },
         })
         const { token } = get(signUpUser, 'data.signUp')
-        return ({
-          token,
-        })
+        localStorage.setItem('TOKEN', token)
+        reset()
       } catch (error) {
         console.log('Error:', error)
       }
