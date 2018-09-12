@@ -30,12 +30,12 @@ const StyledButton = styled.button`
   }
 `
 
-const Button = ({ name, ...props }) => (
-  <StyledButton {...props}>{ name }</StyledButton>
+const Button = ({ children, ...props }) => (
+  <StyledButton {...props}>{ children }</StyledButton>
 )
 
 Button.propTypes = {
-  name: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
 }
 
 export default Button

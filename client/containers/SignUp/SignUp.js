@@ -56,10 +56,11 @@ const SignUp = ({ handleSubmit, submitting, valid }) => (
             component={Input}
           />
           <Button
-            name={'Зарегистрироваться'}
             type={'submit'}
             disabled={submitting || !valid}
-          />
+          >
+            { 'Зарегистрироваться' }
+          </Button>
         </form>
       )
     }
