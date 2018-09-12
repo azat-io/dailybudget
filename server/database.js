@@ -7,7 +7,8 @@ class DataBase {
    */
   connect () {
     mongoose.set('useCreateIndex', true)
-    const mongoUrl = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
+    const { DB_HOST, DB_PORT, DB_NAME } = process.env
+    const mongoUrl = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`
     mongoose.connect(mongoUrl, {
       useNewUrlParser: true,
     }).then(() => {
