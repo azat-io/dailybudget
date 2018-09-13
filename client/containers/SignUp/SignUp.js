@@ -13,29 +13,18 @@ import {
 } from 'recompose'
 
 import get from 'lodash/get'
-import isEmpty from 'lodash/isEmpty'
-import trim from 'lodash/trim'
 
 import Title from 'components/Title'
 import Input from 'components/Input'
 import Button from 'components/Button'
 
-import SIGN_UP from './sign-up.gql'
+import {
+  required,
+  email,
+  password,
+} from 'etc/validation'
 
-const validate = values => {
-  const errors = {}
-  if (isEmpty(values.email)) {
-    errors.email = 'Поле обязательно для заполнения'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i.test(values.email)) {
-    errors.email = 'Неверно введёт адрес email'
-  }
-  if (isEmpty(values.password)) {
-    errors.password = 'Поле обязательно для заполнения'
-  } else if (trim(values.password.length) < 6) {
-    errors.password = 'Длина пароля должна быть менее 6 символов'
-  }
-  return errors
-}
+import SIGN_UP from './sign-up.gql'
 
 const SignUp = ({ handleSubmit, submitting, valid }) => (
   <Mutation mutation={gql`${SIGN_UP}`}>
@@ -48,12 +37,14 @@ const SignUp = ({ handleSubmit, submitting, valid }) => (
             placeholder={'Email'}
             type={'text'}
             component={Input}
+            validate={[required, email]}
           />
           <Field
             name={'password'}
             placeholder={'Пароль'}
             type={'password'}
             component={Input}
+            validate={[required, password]}
           />
           <Button
             type={'submit'}
@@ -76,7 +67,6 @@ SignUp.propTypes = {
 export default compose(
   reduxForm({
     form: 'signUpForm',
-    validate,
   }),
   connect(({ form: { signUpForm } }) => ({
     email: get(signUpForm, 'values.email'),
