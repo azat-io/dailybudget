@@ -5,10 +5,10 @@ import {
   HotModuleReplacementPlugin,
 } from 'webpack'
 
-import FaviconsWebpackPlugin from 'favicons-webpack-plugin'
 import HardSourceWebpackPlugin from 'hard-source-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import HtmlWebpackTemplate from 'html-webpack-template'
+import WebappWebpackPlugin from 'webapp-webpack-plugin'
 
 dotenv.config()
 
@@ -30,7 +30,7 @@ export default {
       template: HtmlWebpackTemplate,
       title: 'Daily Budget',
       cache: true,
-      inject: false,
+      inject: true,
       appMountId: 'app',
       mobile: true,
       meta: {
@@ -42,24 +42,25 @@ export default {
         useShortDoctype: true,
       },
     }),
-    new FaviconsWebpackPlugin({
+    new WebappWebpackPlugin({
       logo: './client/assets/logo.svg',
-      prefix: 'assets/',
-      persistentCache: true,
-      inject: true,
-      background: 'lightgreen',
-      title: 'Daily Budget',
-      icons: {
-        android: true,
-        appleIcon: true,
-        appleStartup: false,
-        coast: false,
-        favicons: true,
-        firefox: true,
-        opengraph: false,
-        twitter: false,
-        yandex: false,
-        windows: false,
+      favicons: {
+        appName: 'Daily Budget',
+        appDescription: 'App for calculating your daily budget',
+        background: '#725c7b',
+        theme_color: '#725c7b',
+        icons: {
+          android: true,
+          appleIcon: true,
+          appleStartup: false,
+          coast: false,
+          favicons: true,
+          firefox: true,
+          opengraph: false,
+          twitter: false,
+          yandex: false,
+          windows: false,
+        },
       },
     }),
     new DefinePlugin({
