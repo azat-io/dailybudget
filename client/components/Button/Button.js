@@ -9,7 +9,7 @@ const StyledButton = styled.button`
   background: ${({ theme }) => theme.primaryColor};
   color: ${({ theme }) => theme.primaryContrastColor};
   font-size: 15px;
-  border: 1px solid ${({theme}) => darken(0.025, theme.primaryColor)};
+  border: 1px solid ${({ theme }) => darken(0.025, theme.primaryColor)};
   border-radius: 100px;
   padding: 12px 16px;
   outline: 0;
@@ -25,7 +25,7 @@ const StyledButton = styled.button`
 
   &:disabled {
     background: ${({ theme }) => lighten(0.3, theme.primaryColor)};
-    border: 1px solid ${({theme}) => lighten(0.25, theme.primaryColor)};
+    border: 1px solid ${({ theme }) => lighten(0.25, theme.primaryColor)};
     cursor: not-allowed;
   }
 `

@@ -1,7 +1,17 @@
 {
-  "presets": ["es2015", "react", "stage-0"],
-  "plugins": [["transform-runtime", {
-    "polyfill": false,
-    "regenerator": true
-  }]]
+  "presets": [
+    [
+      "@babel/preset-env", {
+        "useBuiltIns": "entry"
+      }
+    ],
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime", {
+        "regenerator": true
+      }
+    ]
+  ]
 }

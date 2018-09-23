@@ -5,7 +5,6 @@ import {
   HotModuleReplacementPlugin,
 } from 'webpack'
 
-import HardSourceWebpackPlugin from 'hard-source-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import HtmlWebpackTemplate from 'html-webpack-template'
 import WebappWebpackPlugin from 'webapp-webpack-plugin'
@@ -67,7 +66,6 @@ export default {
       API_PREFIX: JSON.stringify(process.env.API_PREFIX),
     }),
     new HotModuleReplacementPlugin(),
-    new HardSourceWebpackPlugin(),
   ],
   module: {
     rules: [{

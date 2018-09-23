@@ -24,16 +24,18 @@ const StyledLogo = styled.img`
 
 const Header = () => (
   <StyledHeader>
-    <SVGInline
-      svg={menuIcon}
-      fill={'currentColor'}
-      width={'20px'}
-      height={'20px'}
-      style={{
-        marginTop: 2,
-        cursor: 'pointer',
-      }}
-    />
+    <div>
+      <SVGInline
+        svg={menuIcon}
+        fill={'currentColor'}
+        width={'20px'}
+        height={'20px'}
+        style={{
+          marginTop: 2,
+          cursor: 'pointer',
+        }}
+      />
+    </div>
     <Link to={'/'}>
       <StyledLogo src={logo} alt={'Daily Budget'} />
     </Link>

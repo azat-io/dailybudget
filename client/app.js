@@ -12,7 +12,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { render } from 'react-dom'
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
+import styled, { ThemeProvider, injectGlobal } from 'styled-components'
 import { normalize, selection } from 'polished'
 
 import Home from 'containers/Home'
@@ -54,7 +54,7 @@ const client = new ApolloClient({
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ &&
   window.__REDUX_DEVTOOLS_EXTENSION__())
 
-const GlobalStyle = createGlobalStyle`
+injectGlobal`
   ${normalize()}
   ${({ theme }) => selection({
     background: theme.primaryColor,
@@ -80,7 +80,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-const Container = styled.div`
+const Container = styled('div')`
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 100%;
@@ -93,7 +93,6 @@ const App = () => (
       <Router>
         <ThemeProvider theme={theme}>
           <Container>
-            <GlobalStyle />
             <Header />
             <Main>
               <Switch>
