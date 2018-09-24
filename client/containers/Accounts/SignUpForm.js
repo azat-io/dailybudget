@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { connect } from 'react-redux'
@@ -26,39 +28,45 @@ import {
 
 import SIGN_UP from './sign-up.gql'
 
-const SignUp = ({ handleSubmit, submitting, valid }) => (
-  <Mutation mutation={gql`${SIGN_UP}`}>
-    {
-      (signUp, { data }) => (
-        <form onSubmit={(event) => handleSubmit(event, signUp)}>
-          <Title name={'Регистрация'} />
-          <Field
-            name={'email'}
-            placeholder={'Email'}
-            type={'text'}
-            component={Input}
-            validate={[required, email]}
-          />
-          <Field
-            name={'password'}
-            placeholder={'Пароль'}
-            type={'password'}
-            component={Input}
-            validate={[required, password]}
-          />
-          <Button
-            type={'submit'}
-            disabled={submitting || !valid}
-          >
-            { 'Зарегистрироваться' }
-          </Button>
-        </form>
-      )
-    }
-  </Mutation>
+const StyledSignUpForm = styled.div`
+  grid-area: sign-up;
+`
+
+const SignUpForm = ({ handleSubmit, submitting, valid }) => (
+  <StyledSignUpForm>
+    <Mutation mutation={gql`${SIGN_UP}`}>
+      {
+        (signUp, { data }) => (
+          <form onSubmit={(event) => handleSubmit(event, signUp)}>
+            <Title name={'Впервые у нас?'} />
+            <Field
+              name={'email'}
+              placeholder={'Email'}
+              type={'text'}
+              component={Input}
+              validate={[required, email]}
+            />
+            <Field
+              name={'password'}
+              placeholder={'Пароль'}
+              type={'password'}
+              component={Input}
+              validate={[required, password]}
+            />
+            <Button
+              type={'submit'}
+              disabled={submitting || !valid}
+            >
+              { 'Зарегистрироваться' }
+            </Button>
+          </form>
+        )
+      }
+    </Mutation>
+  </StyledSignUpForm>
 )
 
-SignUp.propTypes = {
+SignUpForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   valid: PropTypes.bool.isRequired,
@@ -90,4 +98,4 @@ export default compose(
       }
     },
   }),
-)(SignUp)
+)(SignUpForm)

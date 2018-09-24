@@ -1,23 +1,28 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import {
   BrowserRouter as Router,
   Route,
   Switch,
 } from 'react-router-dom'
+
 import { ApolloClient } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
 import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { render } from 'react-dom'
-import styled, { ThemeProvider, injectGlobal } from 'styled-components'
+
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { normalize, selection } from 'polished'
 
+import isNil from 'lodash/isNil'
+
+import Accounts from 'containers/Accounts'
 import Home from 'containers/Home'
 import Categories from 'containers/Categories'
-import SignUp from 'containers/SignUp'
 import NotFound from 'containers/NotFound'
 
 import Header from 'components/Header'
@@ -34,7 +39,6 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((request, { headers }) => {
   const token = localStorage.getItem('TOKEN')
-  console.log('token', token)
   return {
     headers: {
       ...headers,
@@ -54,7 +58,7 @@ const client = new ApolloClient({
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ &&
   window.__REDUX_DEVTOOLS_EXTENSION__())
 
-injectGlobal`
+const GlobalStyles = createGlobalStyle`
   ${normalize()}
   ${({ theme }) => selection({
     background: theme.primaryColor,
@@ -80,7 +84,7 @@ injectGlobal`
   }
 `
 
-const Container = styled('div')`
+const Container = styled.div`
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 100%;
@@ -93,16 +97,26 @@ const App = () => (
       <Router>
         <ThemeProvider theme={theme}>
           <Container>
-            <Header />
-            <Main>
-              <Switch>
-                <Route exact path={'/'} component={Home} />
-                <Route path={'/categories'} component={Categories} />
-                <Route path={'/sign-up'} component={SignUp} />
-                <Route component={NotFound} />
-              </Switch>
-            </Main>
-            <Footer />
+            <GlobalStyles />
+            {
+              isNil(localStorage.getItem('TOKEN')) ? (
+                <Switch>
+                  <Route exact path={'/'} component={Accounts} />
+                </Switch>
+              ) : (
+                <Fragment>
+                  <Header />
+                  <Main>
+                    <Switch>
+                      <Route exact path={'/'} component={Home} />
+                      <Route path={'/categories'} component={Categories} />
+                      <Route component={NotFound} />
+                    </Switch>
+                  </Main>
+                  <Footer />
+                </Fragment>
+              )
+            }
           </Container>
         </ThemeProvider>
       </Router>

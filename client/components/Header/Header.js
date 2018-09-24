@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import SVGInline from 'react-svg-inline'
 
-import logo from './logo.png'
+import logo from './logo.svg'
 import menuIcon from './menu-icon.svg'
 
 const StyledHeader = styled.header`
@@ -17,29 +18,43 @@ const StyledHeader = styled.header`
   padding: 12px 24px;
 `
 
-const StyledLogo = styled.img`
-  cursor: pointer;
-  user-select: none;
-`
-
-const Header = () => (
+const Header = ({ simplified }) => (
   <StyledHeader>
     <div>
-      <SVGInline
-        svg={menuIcon}
-        fill={'currentColor'}
-        width={'20px'}
-        height={'20px'}
-        style={{
-          marginTop: 2,
-          cursor: 'pointer',
-        }}
-      />
+      { simplified ? '' : (
+        <SVGInline
+          svg={menuIcon}
+          fill={'currentColor'}
+          width={'20px'}
+          height={'20px'}
+          style={{
+            marginTop: 2,
+            cursor: 'pointer',
+          }}
+        />
+      ) }
     </div>
     <Link to={'/'}>
-      <StyledLogo src={logo} alt={'Daily Budget'} />
+      <SVGInline
+        svg={logo}
+        width={'128px'}
+        height={'30px'}
+        style={{
+          cursor: 'pointer',
+          userSelect: 'none',
+          userDrag: 'none',
+        }}
+      />
     </Link>
   </StyledHeader>
 )
+
+Header.propTypes = {
+  simplified: PropTypes.bool,
+}
+
+Header.defaultProps = {
+  simplified: false,
+}
 
 export default Header
